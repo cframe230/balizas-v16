@@ -18,11 +18,6 @@
     <!-- Contenedor del mapa -->
     <div id="map"></div>
 
-    <!-- Botón de ajustes -->
-    <button id="settings-button" class="settings-btn" title="Ajustes">
-        ⚙️
-    </button>
-
     <!-- Panel de configuración -->
     <div id="settings-panel" class="settings-panel hidden">
         <h3 data-i18n="settings">Ajustes</h3>
@@ -52,7 +47,13 @@
         <div id="status" class="loading" data-i18n="loading">Cargando datos...</div>
         <div id="beacon-count">0</div>
         <div id="last-update"><span data-i18n="lastUpdate">Última actualización</span>: <span id="last-update-time">--</span></div>
-        <div id="next-update"><span data-i18n="nextUpdate">Próxima actualización en</span>: <span id="next-update-time">--</span></div>
+        <div id="next-update">
+            <span data-i18n="nextUpdate">Próxima actualización en</span>: <span id="next-update-time">--</span>
+            <!-- Botón de ajustes alineado con próxima actualización -->
+            <button id="settings-button" class="settings-btn" title="Ajustes">
+                ⚙️
+            </button>
+        </div>
     </div>
 
     <!-- OpenLayers JS -->
