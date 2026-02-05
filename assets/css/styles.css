@@ -29,6 +29,28 @@ body {
 /* ========================================
    Panel de información
    ======================================== */
+#dgt-notice-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 400px;
+    border-left: 4px solid #e74c3c;
+    pointer-events: none;
+}
+
+#dgt-notice-box p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #444;
+    margin: 0;
+    font-weight: 500;
+}
+
 #info-panel {
     position: absolute;
     top: 10px;
@@ -291,6 +313,18 @@ body {
    Responsive - Tablets y móviles
    ======================================== */
 @media (max-width: 768px) {
+    #dgt-notice-box {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        max-width: none;
+        padding: 8px 12px;
+    }
+
+    #dgt-notice-box p {
+        font-size: 11px;
+    }
+
     #info-panel {
         top: auto;
         bottom: 20px;

@@ -84,6 +84,9 @@ const MapManager = {
             view: new ol.View({
                 center: ol.proj.fromLonLat(this.config.MAP_CENTER),
                 zoom: this.config.MAP_ZOOM
+            }),
+            controls: ol.control.defaults.defaults({
+                zoom: false
             })
         });
 

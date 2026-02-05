@@ -23,6 +23,8 @@ const I18n = {
             lastUpdate: 'Última actualización',
             nextUpdate: 'Próxima actualización en',
 
+            dgtNotice: 'La DGT solo publica información sobre la activación de dispositivos V16 en carreteras y autopistas nacionales. No se publican las balizas activadas en zonas urbanas ni en áreas alejadas de la red viaria.',
+
             myLocation: 'Mi ubicación',
 
             // Popup de baliza
@@ -54,6 +56,8 @@ const I18n = {
             error: 'Error',
             lastUpdate: 'Last update',
             nextUpdate: 'Next update in',
+
+            dgtNotice: 'The DGT only publishes information on V16 device activation on national roads and highways. Beacons activated in urban areas or areas far from the road network are not published.',
 
             myLocation: 'My location',
 
