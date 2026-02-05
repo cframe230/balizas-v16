@@ -23,6 +23,8 @@ const I18n = {
             lastUpdate: 'Última actualización',
             nextUpdate: 'Próxima actualización en',
 
+            myLocation: 'Mi ubicación',
+
             // Popup de baliza
             beacon: 'Baliza V16',
             location: 'Ubicación',
@@ -52,6 +54,8 @@ const I18n = {
             error: 'Error',
             lastUpdate: 'Last update',
             nextUpdate: 'Next update in',
+
+            myLocation: 'My location',
 
             // Beacon popup
             beacon: 'V16 Beacon',

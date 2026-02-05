@@ -22,11 +22,15 @@ const App = {
         // Inicializar mapa
         MapManager.init();
 
+        this.initUserLocation();
+
         // Configurar panel de ajustes
         this.setupSettingsPanel();
 
         // Configurar selector de idioma
         this.setupLanguageSelector();
+
+        this.setupLocateButton();
 
         // Cargar datos iniciales
         await this.loadAndRenderBeacons();
@@ -128,6 +132,22 @@ const App = {
         }
     },
 
+    initUserLocation() {
+        if (!navigator.geolocation) {
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                MapManager.setUserLocation(longitude, latitude);
+            },
+            (error) => {
+                console.warn('No se pudo obtener la ubicación del usuario:', error);
+            }
+        );
+    },
+
     /**
      * Actualiza textos dinámicos después de cambio de idioma
      */
@@ -140,6 +160,53 @@ const App = {
 
         // Actualizar próxima actualización
         this.updateCountdownDisplay();
+
+        this.updateLocateButtonA11y();
+    },
+
+    setupLocateButton() {
+        const locateBtn = document.getElementById('locate-button');
+        if (!locateBtn) {
+            return;
+        }
+
+        locateBtn.addEventListener('click', () => {
+            if (MapManager.focusUserLocation()) {
+                return;
+            }
+
+            if (!navigator.geolocation) {
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    MapManager.setUserLocation(longitude, latitude);
+                },
+                (error) => {
+                    console.warn('No se pudo obtener la ubicación del usuario:', error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        });
+
+        this.updateLocateButtonA11y();
+    },
+
+    updateLocateButtonA11y() {
+        const locateBtn = document.getElementById('locate-button');
+        if (!locateBtn) {
+            return;
+        }
+
+        const label = I18n.get('myLocation');
+        locateBtn.title = label;
+        locateBtn.setAttribute('aria-label', label);
     },
 
     /**

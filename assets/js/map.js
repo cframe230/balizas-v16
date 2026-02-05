@@ -8,6 +8,9 @@ const MapManager = {
     map: null,
     vectorSource: null,
     vectorLayer: null,
+    userSource: null,
+    userLayer: null,
+    userFeature: null,
     osmLayer: null,
     satelliteLayer: null,
     currentLayer: 'osm',
@@ -16,7 +19,8 @@ const MapManager = {
     config: {
         MAP_CENTER: [-3.7038, 40.4168], // Madrid (lon, lat)
         MAP_ZOOM: 6,
-        BEACON_ICON_PATH: './assets/images/baliza-intermitente-32px.png'
+        BEACON_ICON_PATH: './assets/images/baliza-intermitente-32px.png',
+        USER_ICON_PATH: './assets/images/person.png'
     },
 
     /**
@@ -43,6 +47,8 @@ const MapManager = {
         // Crear fuente de datos vectorial para los markers
         this.vectorSource = new ol.source.Vector();
 
+        this.userSource = new ol.source.Vector();
+
         // Crear capa vectorial con estilo personalizado
         this.vectorLayer = new ol.layer.Vector({
             source: this.vectorSource,
@@ -55,13 +61,25 @@ const MapManager = {
             })
         });
 
+        this.userLayer = new ol.layer.Vector({
+            source: this.userSource,
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: this.config.USER_ICON_PATH,
+                    scale: 1
+                })
+            })
+        });
+
         // Crear mapa con ambas capas base
         this.map = new ol.Map({
             target: 'map',
             layers: [
                 this.osmLayer,
                 this.satelliteLayer,
-                this.vectorLayer
+                this.vectorLayer,
+                this.userLayer
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat(this.config.MAP_CENTER),
@@ -142,6 +160,48 @@ const MapManager = {
                 duration: 1000
             });
         }
+    },
+
+    setUserLocation(lon, lat) {
+        const coordinate = ol.proj.fromLonLat([lon, lat]);
+
+        if (this.userFeature) {
+            this.userFeature.setGeometry(new ol.geom.Point(coordinate));
+        } else {
+            this.userFeature = new ol.Feature({
+                geometry: new ol.geom.Point(coordinate)
+            });
+
+            this.userSource.addFeature(this.userFeature);
+        }
+
+        if (this.map) {
+            this.map.getView().setCenter(coordinate);
+            this.map.getView().setZoom(14);
+        }
+    },
+
+    focusUserLocation() {
+        if (!this.map || !this.userFeature) {
+            return false;
+        }
+
+        const geometry = this.userFeature.getGeometry();
+        if (!geometry) {
+            return false;
+        }
+
+        const coordinate = geometry.getCoordinates();
+        const view = this.map.getView();
+        const currentZoom = typeof view.getZoom() === 'number' ? view.getZoom() : 0;
+
+        view.animate({
+            center: coordinate,
+            zoom: Math.max(currentZoom, 14),
+            duration: 450
+        });
+
+        return true;
     },
 
     /**
