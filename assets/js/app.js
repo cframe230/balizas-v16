@@ -171,26 +171,40 @@ const App = {
         }
 
         locateBtn.addEventListener('click', () => {
-            if (MapManager.focusUserLocation()) {
+            if (!navigator.geolocation) {
+                console.warn('Geolocalización no soportada');
                 return;
             }
 
-            if (!navigator.geolocation) {
-                return;
-            }
+            // Añadir una clase visual para indicar que está cargando
+            locateBtn.style.opacity = '0.7';
+            locateBtn.style.pointerEvents = 'none';
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
+                    // Actualizar posición en el mapa
                     MapManager.setUserLocation(longitude, latitude);
+                    // Forzar el enfoque a la nueva posición
+                    MapManager.focusUserLocation();
+                    
+                    // Restaurar botón
+                    locateBtn.style.opacity = '1';
+                    locateBtn.style.pointerEvents = 'auto';
                 },
                 (error) => {
                     console.warn('No se pudo obtener la ubicación del usuario:', error);
+                    // Si falla el GPS pero ya teníamos una posición previa, al menos enfocamos esa
+                    MapManager.focusUserLocation();
+                    
+                    // Restaurar botón
+                    locateBtn.style.opacity = '1';
+                    locateBtn.style.pointerEvents = 'auto';
                 },
                 {
                     enableHighAccuracy: true,
                     timeout: 10000,
-                    maximumAge: 0
+                    maximumAge: 0 // Forzar posición fresca
                 }
             );
         });
