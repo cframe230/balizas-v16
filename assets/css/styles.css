@@ -323,8 +323,8 @@ body {
     }
 
     .locate-btn {
-        bottom: 92px;
-        bottom: calc(92px + env(safe-area-inset-bottom));
+        bottom: 160px;
+        bottom: calc(160px + env(safe-area-inset-bottom));
         padding: 10px 12px;
         gap: 8px;
         font-size: 12px;
@@ -395,8 +395,8 @@ body {
     }
 
     .locate-btn {
-        bottom: 104px;
-        bottom: calc(104px + env(safe-area-inset-bottom));
+        bottom: 175px;
+        bottom: calc(175px + env(safe-area-inset-bottom));
     }
 
     .settings-panel {
