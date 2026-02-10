@@ -1,0 +1,6 @@
+{
+  "appId": "app.vercel.balizasv16",
+  "appName": "balizas-v16",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

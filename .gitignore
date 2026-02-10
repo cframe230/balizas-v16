@@ -19,3 +19,15 @@ tmpclaude-*
 
 # Test files
 test-*.html
+
+# Dependencies
+node_modules/
+
+# Capacitor & Android build artifacts
+www/
+android/
+capacitor.config.json.tmp
+
+# Local environment files
+.env
+.env.local

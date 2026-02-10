@@ -78,8 +78,8 @@ const MapManager = {
             layers: [
                 this.osmLayer,
                 this.satelliteLayer,
-                this.vectorLayer,
-                this.userLayer
+                this.userLayer,
+                this.vectorLayer
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat(this.config.MAP_CENTER),
