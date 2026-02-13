@@ -9,6 +9,7 @@ const App = {
     countdownTimer: null,
     refreshInterval: 300000, // 300 segundos = 5 minutos
     remainingSeconds: 300,
+    deferredInstallPrompt: null,
 
     /**
      * Inicializa la aplicación
@@ -34,6 +35,8 @@ const App = {
 
         this.setupNoticeBox();
 
+        this.setupPwaInstall();
+
         // Cargar datos iniciales
         await this.loadAndRenderBeacons();
 
@@ -56,6 +59,29 @@ const App = {
                 }, 300);
             });
         }
+    },
+
+    setupPwaInstall() {
+        const installButton = document.getElementById('btn-install-pwa');
+        if (!installButton) {
+            return;
+        }
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            this.deferredInstallPrompt = event;
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (this.deferredInstallPrompt) {
+                this.deferredInstallPrompt.prompt();
+                const choiceResult = await this.deferredInstallPrompt.userChoice;
+                this.deferredInstallPrompt = null;
+                return;
+            }
+
+            alert('Para instalar la aplicación, use "Añadir a pantalla de inicio" en el navegador.');
+        });
     },
 
     /**
