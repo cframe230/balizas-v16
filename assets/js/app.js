@@ -53,10 +53,7 @@ const App = {
         const noticeBox = document.getElementById('dgt-notice-box');
         if (noticeBox) {
             noticeBox.addEventListener('click', () => {
-                noticeBox.style.opacity = '0';
-                setTimeout(() => {
-                    noticeBox.classList.add('hidden');
-                }, 300);
+                noticeBox.classList.add('hidden');
             });
         }
     },
