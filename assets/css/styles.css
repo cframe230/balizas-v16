@@ -40,7 +40,14 @@ body {
     z-index: 1000;
     max-width: 400px;
     border-left: 4px solid #e74c3c;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#dgt-notice-box:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.01);
 }
 
 #dgt-notice-box p {

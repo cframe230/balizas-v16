@@ -7,6 +7,12 @@
     <meta name="keywords" content="balizas V16, DGT, tráfico, España, mapa">
     <meta name="author" content="Balizas V16">
     <title>Balizas V16 - DGT España</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Balizas V16">
+    <link rel="apple-touch-icon" href="assets/images/baliza_v16_simple_icon.png">
 
     <!-- OpenLayers CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.2.0/ol.css">
@@ -68,6 +74,14 @@
 
     <!-- OpenLayers JS -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+            });
+        }
+    </script>
 
     <!-- Scripts de la aplicación -->
     <script src="./assets/js/i18n.js"></script>

@@ -1,0 +1,17 @@
+{
+  "name": "Balizas V16 - DGT España",
+  "short_name": "Balizas V16",
+  "description": "Visor en tiempo real de balizas V16 activas en España",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2c3e50",
+  "icons": [
+    {
+      "src": "assets/images/baliza_v16_simple_icon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

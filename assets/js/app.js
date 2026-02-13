@@ -32,6 +32,8 @@ const App = {
 
         this.setupLocateButton();
 
+        this.setupNoticeBox();
+
         // Cargar datos iniciales
         await this.loadAndRenderBeacons();
 
@@ -39,6 +41,21 @@ const App = {
         this.startAutoRefresh();
 
         console.log('Aplicación iniciada correctamente');
+    },
+
+    /**
+     * Configura el cuadro de aviso de la DGT para que se oculte al hacer clic
+     */
+    setupNoticeBox() {
+        const noticeBox = document.getElementById('dgt-notice-box');
+        if (noticeBox) {
+            noticeBox.addEventListener('click', () => {
+                noticeBox.style.opacity = '0';
+                setTimeout(() => {
+                    noticeBox.classList.add('hidden');
+                }, 300);
+            });
+        }
     },
 
     /**
