@@ -67,21 +67,50 @@ const App = {
             return;
         }
 
+        const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if (isStandalone) {
+            installButton.style.display = 'none';
+            return;
+        }
+
+        this.updateInstallButtonText();
+
         window.addEventListener('beforeinstallprompt', (event) => {
             event.preventDefault();
             this.deferredInstallPrompt = event;
+            this.updateInstallButtonText();
         });
 
         installButton.addEventListener('click', async () => {
-            if (this.deferredInstallPrompt) {
-                this.deferredInstallPrompt.prompt();
-                const choiceResult = await this.deferredInstallPrompt.userChoice;
-                this.deferredInstallPrompt = null;
+            if (isIos) {
+                alert(I18n.get('installPromptIos'));
                 return;
             }
 
-            alert('Para instalar la aplicación, use "Añadir a pantalla de inicio" en el navegador.');
+            if (this.deferredInstallPrompt) {
+                this.deferredInstallPrompt.prompt();
+                await this.deferredInstallPrompt.userChoice;
+                this.deferredInstallPrompt = null;
+                this.updateInstallButtonText();
+                return;
+            }
+
+            alert(I18n.get('installPromptOther'));
         });
+    },
+
+    updateInstallButtonText() {
+        const installButton = document.getElementById('btn-install-pwa');
+        if (!installButton) {
+            return;
+        }
+
+        const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const key = isIos ? 'installHelp' : (this.deferredInstallPrompt ? 'installApp' : 'installHelp');
+        installButton.textContent = I18n.get(key);
+        installButton.setAttribute('data-i18n', key);
     },
 
     /**
@@ -205,6 +234,8 @@ const App = {
         this.updateCountdownDisplay();
 
         this.updateLocateButtonA11y();
+
+        this.updateInstallButtonText();
     },
 
     setupLocateButton() {

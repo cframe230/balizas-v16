@@ -103,6 +103,15 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    flex-wrap: wrap;
+}
+
+#next-update span {
+    flex: 1 1 auto;
+}
+
+#next-update .settings-btn {
+    margin-left: auto;
 }
 
 /* ========================================

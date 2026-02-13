@@ -14,6 +14,11 @@ const I18n = {
             settings: 'Ajustes',
             mapView: 'Vista del mapa',
             language: 'Idioma',
+            installAppLabel: 'Instalar aplicación',
+            installApp: 'Instalar',
+            installHelp: 'Cómo instalar',
+            installPromptIos: 'En iPhone, toca Compartir y luego "Añadir a pantalla de inicio".',
+            installPromptOther: 'Para instalar la aplicación, use "Añadir a pantalla de inicio" en el navegador.',
 
             // Panel de información
             activeBeacons: 'Balizas V16 Activas',
@@ -48,6 +53,11 @@ const I18n = {
             settings: 'Settings',
             mapView: 'Map view',
             language: 'Language',
+            installAppLabel: 'Install app',
+            installApp: 'Install',
+            installHelp: 'How to install',
+            installPromptIos: 'On iPhone, tap Share and then "Add to Home Screen".',
+            installPromptOther: 'To install the app, use "Add to Home Screen" in your browser.',
 
             // Info panel
             activeBeacons: 'Active V16 Beacons',
