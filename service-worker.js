@@ -1,4 +1,4 @@
-const CACHE_NAME = 'balizas-v16-v2';
+const CACHE_NAME = 'balizas-v16-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const ASSETS = [
   './assets/js/dgt-api.js',
   './assets/js/i18n.js',
   './assets/images/baliza-intermitente-32px.png',
+  './assets/images/baliza_v16_simple_icon.png',
   './assets/images/person.png'
 ];
 
