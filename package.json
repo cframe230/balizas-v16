@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "npx http-server -c-1 -p 5173 .",
+    "lint": "eslint .",
+    "format": "prettier -w \"**/*.{js,css,html,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +25,33 @@
     "@capacitor/android": "^8.0.2",
     "@capacitor/cli": "^8.0.2",
     "@capacitor/core": "^8.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "script"
+    },
+    "globals": {
+      "ol": "readonly",
+      "I18n": "readonly",
+      "MapManager": "readonly",
+      "DgtApi": "readonly",
+      "App": "readonly"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true
   }
 }

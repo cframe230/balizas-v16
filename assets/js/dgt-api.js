@@ -18,15 +18,29 @@ const DgtApi = {
     async fetchData() {
         console.log('Cargando datos desde DGT via CodeTabs proxy...');
 
-        const response = await fetch(
-            this.config.PROXY_URL + encodeURIComponent(this.config.DGT_FEED_URL),
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/xml, text/xml, */*'
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), this.config.REQUEST_TIMEOUT);
+
+        let response;
+        try {
+            response = await fetch(
+                this.config.PROXY_URL + encodeURIComponent(this.config.DGT_FEED_URL),
+                {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/xml, text/xml, */*'
+                    },
+                    signal: controller.signal
                 }
+            );
+        } catch (error) {
+            if (error && error.name === 'AbortError') {
+                throw new Error('Tiempo de espera agotado');
             }
-        );
+            throw error;
+        } finally {
+            clearTimeout(timeoutId);
+        }
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);

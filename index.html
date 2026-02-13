@@ -79,6 +79,29 @@
         </div>
     </div>
 
+    <div id="beacon-popup" class="beacon-popup hidden" role="dialog" aria-modal="true" aria-labelledby="beacon-popup-title">
+        <div class="beacon-popup-content">
+            <div class="beacon-popup-header">
+                <h3 id="beacon-popup-title" data-i18n="beacon">Baliza V16</h3>
+                <button id="beacon-popup-close" class="beacon-popup-close" type="button" data-i18n="close" aria-label="Cerrar">Cerrar</button>
+            </div>
+            <div class="beacon-popup-body">
+                <div class="beacon-popup-row">
+                    <span data-i18n="location">Ubicación</span>
+                    <span id="beacon-popup-location">--</span>
+                </div>
+                <div class="beacon-popup-row">
+                    <span data-i18n="time">Hora</span>
+                    <span id="beacon-popup-time">--</span>
+                </div>
+                <div class="beacon-popup-row">
+                    <span data-i18n="type">Tipo</span>
+                    <span id="beacon-popup-type">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- OpenLayers JS -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 

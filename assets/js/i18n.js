@@ -38,6 +38,7 @@ const I18n = {
             time: 'Hora',
             type: 'Tipo',
             unknown: 'Desconocido',
+            close: 'Cerrar',
 
             // Tipos de vehículo
             vehicleStuck: 'Vehículo atascado',
@@ -77,6 +78,7 @@ const I18n = {
             time: 'Time',
             type: 'Type',
             unknown: 'Unknown',
+            close: 'Close',
 
             // Vehicle types
             vehicleStuck: 'Vehicle stuck',

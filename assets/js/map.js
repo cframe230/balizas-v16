@@ -97,6 +97,8 @@ const MapManager = {
         // Configurar selector de capa
         this.setupLayerSelector();
 
+        this.setupPopup();
+
         console.log('Mapa inicializado correctamente');
     },
 
@@ -109,11 +111,7 @@ const MapManager = {
 
         if (feature) {
             const props = feature.getProperties();
-            const message = `${I18n.get('beacon')}\n\n` +
-                          `${I18n.get('location')}: ${props.location || I18n.get('unknown')}\n` +
-                          `${I18n.get('time')}: ${this.formatTime(props.time) || I18n.get('unknown')}\n` +
-                          `${I18n.get('type')}: ${this.formatType(props.type) || I18n.get('unknown')}`;
-            alert(message);
+            this.showBeaconPopup(props);
         }
     },
 
@@ -131,6 +129,44 @@ const MapManager = {
         }
     },
 
+    setupPopup() {
+        const popup = document.getElementById('beacon-popup');
+        const closeBtn = document.getElementById('beacon-popup-close');
+
+        if (!popup || !closeBtn) {
+            return;
+        }
+
+        closeBtn.addEventListener('click', () => {
+            popup.classList.add('hidden');
+        });
+
+        popup.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                popup.classList.add('hidden');
+            }
+        });
+    },
+
+    showBeaconPopup(props) {
+        const popup = document.getElementById('beacon-popup');
+        const titleEl = document.getElementById('beacon-popup-title');
+        const locationEl = document.getElementById('beacon-popup-location');
+        const timeEl = document.getElementById('beacon-popup-time');
+        const typeEl = document.getElementById('beacon-popup-type');
+
+        if (!popup || !titleEl || !locationEl || !timeEl || !typeEl) {
+            return;
+        }
+
+        titleEl.textContent = I18n.get('beacon');
+        locationEl.textContent = props.location || I18n.get('unknown');
+        timeEl.textContent = this.formatTime(props.time) || I18n.get('unknown');
+        typeEl.textContent = this.formatType(props.type) || I18n.get('unknown');
+
+        popup.classList.remove('hidden');
+    },
+
     /**
      * Renderiza las balizas en el mapa
      * @param {Array} beacons - Array de objetos con datos de balizas
@@ -140,17 +176,15 @@ const MapManager = {
         this.vectorSource.clear();
 
         // Agregar nuevos markers
-        beacons.forEach(beacon => {
-            const feature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.fromLonLat([beacon.lon, beacon.lat])),
-                id: beacon.id,
-                time: beacon.time,
-                type: beacon.type,
-                location: beacon.location
-            });
+        const features = beacons.map((beacon) => new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([beacon.lon, beacon.lat])),
+            id: beacon.id,
+            time: beacon.time,
+            type: beacon.type,
+            location: beacon.location
+        }));
 
-            this.vectorSource.addFeature(feature);
-        });
+        this.vectorSource.addFeatures(features);
 
         console.log(`${beacons.length} balizas renderizadas en el mapa`);
 

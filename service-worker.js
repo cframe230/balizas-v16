@@ -1,4 +1,4 @@
-const CACHE_NAME = 'balizas-v16-v3';
+const CACHE_NAME = 'balizas-v16-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -40,19 +40,19 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
+      const fetchPromise = fetch(event.request)
+        .then((response) => {
+          if (!response || response.status !== 200) {
+            return response;
+          }
 
-      return fetch(event.request).then((response) => {
-        if (!response || response.status !== 200) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
           return response;
-        }
+        })
+        .catch(() => cached);
 
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
-        return response;
-      });
+      return cached || fetchPromise;
     })
   );
 });
