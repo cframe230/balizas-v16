@@ -14,6 +14,10 @@ const MapManager = {
     osmLayer: null,
     satelliteLayer: null,
     currentLayer: 'osm',
+    beaconStyle: null,
+    beaconIcon: null,
+    beaconBlinkTimer: null,
+    beaconBlinkOn: true,
 
     // Configuración
     config: {
@@ -49,16 +53,27 @@ const MapManager = {
 
         this.userSource = new ol.source.Vector();
 
-        // Crear capa vectorial con estilo personalizado
+        // Crear estilos para el parpadeo (Normal y con filtro)
+        this.beaconStyleNormal = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                src: this.config.BEACON_ICON_PATH,
+                scale: 1
+            })
+        });
+
+        this.beaconStyleHighlight = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                src: this.config.BEACON_ICON_PATH,
+                scale: 1,
+                color: '#FFD54F' // Filtro amarillo-naranja más claro (Amber 200)
+            })
+        });
+
         this.vectorLayer = new ol.layer.Vector({
             source: this.vectorSource,
-            style: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 1],
-                    src: this.config.BEACON_ICON_PATH,
-                    scale: 1
-                })
-            })
+            style: this.beaconStyleNormal
         });
 
         this.userLayer = new ol.layer.Vector({
@@ -98,6 +113,8 @@ const MapManager = {
         this.setupLayerSelector();
 
         this.setupPopup();
+
+        this.startBeaconBlinking();
 
         console.log('Mapa inicializado correctamente');
     },
@@ -165,6 +182,31 @@ const MapManager = {
         typeEl.textContent = this.formatType(props.type) || I18n.get('unknown');
 
         popup.classList.remove('hidden');
+    },
+
+    startBeaconBlinking() {
+        if (this.beaconBlinkTimer) {
+            clearInterval(this.beaconBlinkTimer);
+        }
+
+        this.beaconBlinkOn = false;
+        
+        // Función de actualización de estilo que fuerza el redibujado
+        const updateStyle = () => {
+            if (this.vectorLayer) {
+                this.vectorLayer.setStyle(this.beaconBlinkOn ? this.beaconStyleHighlight : this.beaconStyleNormal);
+                // Forzar redibujado explícito para evitar problemas durante el arrastre
+                this.vectorLayer.changed();
+            }
+        };
+
+        // Establecer estado inicial
+        updateStyle();
+
+        this.beaconBlinkTimer = setInterval(() => {
+            this.beaconBlinkOn = !this.beaconBlinkOn;
+            updateStyle();
+        }, 700);
     },
 
     /**
