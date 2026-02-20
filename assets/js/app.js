@@ -7,8 +7,8 @@ const App = {
     // Estado
     refreshTimer: null,
     countdownTimer: null,
-    refreshInterval: 300000, // 300 segundos = 5 minutos
-    remainingSeconds: 300,
+    refreshInterval: 180000, // 180 segundos = 3 minutos
+    remainingSeconds: 180,
     deferredInstallPrompt: null,
 
     /**
@@ -242,6 +242,7 @@ const App = {
         }
 
         locateBtn.addEventListener('click', () => {
+            this.loadAndRenderBeacons();
             if (!navigator.geolocation) {
                 console.warn('Geolocalización no soportada');
                 return;
