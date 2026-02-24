@@ -33,10 +33,15 @@
   "eslintConfig": {
     "env": {
       "browser": true,
-      "es2021": true
+      "es2021": true,
+      "commonjs": true
     },
     "extends": [
       "eslint:recommended"
+    ],
+    "ignorePatterns": [
+      "android/**",
+      "www/**"
     ],
     "parserOptions": {
       "ecmaVersion": "latest",

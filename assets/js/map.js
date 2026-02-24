@@ -3,7 +3,7 @@
  * Inicialización, renderizado de markers y eventos
  */
 
-const MapManager = {
+window.MapManager = {
     // Estado interno
     map: null,
     vectorSource: null,
@@ -171,8 +171,9 @@ const MapManager = {
         const locationEl = document.getElementById('beacon-popup-location');
         const timeEl = document.getElementById('beacon-popup-time');
         const typeEl = document.getElementById('beacon-popup-type');
+        const openMapsEl = document.getElementById('beacon-popup-open-google-maps');
 
-        if (!popup || !titleEl || !locationEl || !timeEl || !typeEl) {
+        if (!popup || !titleEl || !locationEl || !timeEl || !typeEl || !openMapsEl) {
             return;
         }
 
@@ -180,6 +181,17 @@ const MapManager = {
         locationEl.textContent = props.location || I18n.get('unknown');
         timeEl.textContent = this.formatTime(props.time) || I18n.get('unknown');
         typeEl.textContent = this.formatType(props.type) || I18n.get('unknown');
+
+        const lat = typeof props.lat === 'number' ? props.lat : Number(props.lat);
+        const lon = typeof props.lon === 'number' ? props.lon : Number(props.lon);
+        if (Number.isFinite(lat) && Number.isFinite(lon)) {
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lon}`)}`;
+            openMapsEl.href = url;
+            openMapsEl.style.display = 'inline-flex';
+        } else {
+            openMapsEl.href = '#';
+            openMapsEl.style.display = 'none';
+        }
 
         popup.classList.remove('hidden');
     },
@@ -221,6 +233,8 @@ const MapManager = {
         const features = beacons.map((beacon) => new ol.Feature({
             geometry: new ol.geom.Point(ol.proj.fromLonLat([beacon.lon, beacon.lat])),
             id: beacon.id,
+            lat: beacon.lat,
+            lon: beacon.lon,
             time: beacon.time,
             type: beacon.type,
             location: beacon.location
@@ -366,5 +380,5 @@ const MapManager = {
 
 // Exportar para uso como módulo
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = MapManager;
+    module.exports = window.MapManager;
 }

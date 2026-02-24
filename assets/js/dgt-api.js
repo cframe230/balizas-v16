@@ -3,7 +3,7 @@
  * Carga y parsea el feed DATEX II de balizas V16
  */
 
-const DgtApi = {
+window.DgtApi = {
     // Configuración
     config: {
         DGT_FEED_URL: 'https://nap.dgt.es/datex2/v3/dgt/SituationPublication/datex2_v36.xml',
@@ -156,5 +156,5 @@ const DgtApi = {
 
 // Exportar para uso como módulo
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = DgtApi;
+    module.exports = window.DgtApi;
 }

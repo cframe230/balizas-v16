@@ -3,7 +3,7 @@
  * Gestiona las traducciones español/inglés
  */
 
-const I18n = {
+window.I18n = {
     // Idioma actual
     currentLanguage: 'es',
 
@@ -38,6 +38,7 @@ const I18n = {
             time: 'Hora',
             type: 'Tipo',
             unknown: 'Desconocido',
+            openInGoogleMaps: 'Abrir en Google Maps',
             close: 'Cerrar',
 
             // Tipos de vehículo
@@ -78,6 +79,7 @@ const I18n = {
             time: 'Time',
             type: 'Type',
             unknown: 'Unknown',
+            openInGoogleMaps: 'Open in Google Maps',
             close: 'Close',
 
             // Vehicle types
@@ -164,5 +166,5 @@ const I18n = {
 
 // Exportar para uso como módulo
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = I18n;
+    module.exports = window.I18n;
 }

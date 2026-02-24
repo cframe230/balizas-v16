@@ -3,7 +3,7 @@
  * Coordina la carga de datos, renderizado y actualización
  */
 
-const App = {
+window.App = {
     // Estado
     refreshTimer: null,
     countdownTimer: null,

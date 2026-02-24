@@ -193,6 +193,32 @@ body {
     text-align: right;
 }
 
+.beacon-popup-actions {
+    margin-top: 6px;
+}
+
+.beacon-popup-open-maps {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #3498db;
+    color: #fff;
+    text-decoration: none;
+}
+
+.beacon-popup-open-maps:hover {
+    filter: brightness(0.95);
+}
+
+.beacon-popup-open-maps:active {
+    transform: scale(0.98);
+}
+
 /* ========================================
    Estados de carga
    ======================================== */
